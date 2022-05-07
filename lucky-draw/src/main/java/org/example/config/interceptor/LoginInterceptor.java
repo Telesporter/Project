@@ -2,6 +2,7 @@ package org.example.config.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.base.JSONResponse;
+import org.example.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,10 +24,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
         if(session != null){//获取登录时设置的用户信息
-//            User user = (User) session.getAttribute("user");
-//            if(user != null){//登录了，允许访问
-//                return true;
-//            }
+            User user = (User) session.getAttribute("user");
+            if(user != null){//登录了，允许访问
+                return true;
+            }
         }
         //登录失败，不允许访问的业务：区分前后端
         //TODO：前端跳转登录页面，后端返回json
